@@ -109,6 +109,9 @@ for index, row in _666_games_df[['QueryID']].iterrows():
             id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(slot_list[ind_6]['recommendations_up']),
                                     'negative_count': str(slot_list[ind_6]['recommendations_down'])}, ignore_index=True)
 
+id_p_n = id_p_n.convert_objects(convert_numeric=True)
+print(id_p_n.info())
+
 id_p_n.to_excel('p_n_stamp.xls')
 
 
