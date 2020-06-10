@@ -24,11 +24,14 @@ print(t4_stamp)
 print(t5_stamp)
 print(t6_stamp)
 
+# timeStamp = 1488326400
+# localTime = time.localtime(timeStamp)
+# strTime = time.strftime("%Y-%m-%d %H:%M:%S", localTime)
+# print(strTime)
 now_ID = 0
 
 for index, row in _666_games_df[['QueryID']].iterrows():
     # print(row['QueryID'])
-
     if now_ID != row['QueryID']:
         now_ID = row['QueryID']
 
@@ -38,27 +41,93 @@ for index, row in _666_games_df[['QueryID']].iterrows():
 
         slot_list = data['results']['rollups']
 
-        print(slot_list)
+        # print(slot_list)
 
         _ski = 0
         is_start = False
 
+        ind_1 = None
+        ind_2 = None
+        ind_3 = None
+        ind_4 = None
+        ind_5 = None
+        ind_6 = None
+
+        slo_index = 0
+
         for _tt in slot_list:
-            if _ski >= 6:
-                break
-
             if _tt['date'] == t1_stamp:
-                is_start = True
+                ind_1 = slo_index
 
-            if is_start:
-                # print('t_stamp: ' + str(_tt['date']))
-                # print('t_recom_up: ' + str(_tt['recommendations_up']))
-                # print('t_recom_down: ' + str(_tt['recommendations_down']))
-                id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(_tt['recommendations_up']),
-                                        'negative_count': str(_tt['recommendations_down'])}, ignore_index=True)
-                _ski += 1
-        break
+            if _tt['date'] == t2_stamp:
+                ind_2 = slo_index
+
+            if _tt['date'] == t3_stamp:
+                ind_3 = slo_index
+
+            if _tt['date'] == t4_stamp:
+                ind_4 = slo_index
+
+            if _tt['date'] == t5_stamp:
+                ind_5 = slo_index
+
+            if _tt['date'] == t6_stamp:
+                ind_6 = slo_index
+
+            slo_index += 1
+
+        if ind_1 is None:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': '','negative_count': ''}, ignore_index=True)
+        else:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(slot_list[ind_1]['recommendations_up']),'negative_count': str(slot_list[ind_1]['recommendations_down'])}, ignore_index=True)
+
+        if ind_2 is None:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': '','negative_count': ''}, ignore_index=True)
+        else:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(slot_list[ind_2]['recommendations_up']),'negative_count': str(slot_list[ind_2]['recommendations_down'])}, ignore_index=True)
+
+        if ind_3 is None:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': '','negative_count': ''}, ignore_index=True)
+        else:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(slot_list[ind_3]['recommendations_up']),'negative_count': str(slot_list[ind_3]['recommendations_down'])}, ignore_index=True)
+
+        if ind_4 is None:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': '','negative_count': ''}, ignore_index=True)
+        else:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(slot_list[ind_4]['recommendations_up']),
+                                    'negative_count': str(slot_list[ind_4]['recommendations_down'])}, ignore_index=True)
+
+        if ind_5 is None:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': '','negative_count': ''}, ignore_index=True)
+        else:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(slot_list[ind_5]['recommendations_up']),
+                                    'negative_count': str(slot_list[ind_5]['recommendations_down'])}, ignore_index=True)
+
+        if ind_6 is None:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': '','negative_count': ''}, ignore_index=True)
+        else:
+            id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(slot_list[ind_6]['recommendations_up']),
+                                    'negative_count': str(slot_list[ind_6]['recommendations_down'])}, ignore_index=True)
+
 id_p_n.to_excel('p_n_stamp.xls')
+
+
+        # for _tt in slot_list:
+        #     if _ski >= 6:
+        #         break
+        #
+        #     if _tt['date'] == t1_stamp:
+        #         is_start = True
+        #
+        #     if is_start:
+        #         # print('t_stamp: ' + str(_tt['date']))
+        #         # print('t_recom_up: ' + str(_tt['recommendations_up']))
+        #         # print('t_recom_down: ' + str(_tt['recommendations_down']))
+        #         id_p_n = id_p_n.append({'ID': now_ID, 'positive_count': str(_tt['recommendations_up']),
+        #                                 'negative_count': str(_tt['recommendations_down'])}, ignore_index=True)
+        #         _ski += 1
+        # break
+# id_p_n.to_excel('p_n_stamp.xls')
 
 # if _tt['date']==t1_stamp:
 #     print('t1_stamp: '+str(_tt['date']))
