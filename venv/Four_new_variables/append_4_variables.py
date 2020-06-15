@@ -47,6 +47,10 @@ def string_finder(columns, words):
 
 s_0[['Publisher']] = s_0['Publisher'].str.lower()
 
+major_company_list_all = [item.lower() for item in major_company_list_all]
+mid_company_list_all = [item.lower() for item in mid_company_list_all]
+major_company_list_2018 = [item.lower() for item in major_company_list_2018]
+mid_company_list_2018 = [item.lower() for item in mid_company_list_2018]
 
 s_0['IsAAA'] = s_0[['Publisher']].astype(str).apply(string_finder, words=major_company_list_all, axis=1)
 s_0['IsMidSize'] = s_0[['Publisher']].astype(str).apply(string_finder, words=mid_company_list_all, axis=1)
@@ -54,21 +58,22 @@ s_0['IsMidSize'] = s_0[['Publisher']].astype(str).apply(string_finder, words=mid
 s_0['IsAAA_2018'] = s_0[['Publisher']].astype(str).apply(string_finder, words=major_company_list_2018, axis=1)
 s_0['IsMidSize_2018'] = s_0[['Publisher']].astype(str).apply(string_finder, words=mid_company_list_2018, axis=1)
 
+# print(s_0.info())
 
-#print(s_0.info())
+s_0 = s_0.drop(['Unnamed: 0'], axis=1)
 
-s_0=s_0.drop(['Unnamed: 0'],axis=1)
+print(s_0[['IsAAA']].mean(axis=0))
+print(s_0[['IsMidSize']].mean(axis=0))
+print(s_0[['IsAAA_2018']].mean(axis=0))
+print(s_0[['IsMidSize_2018']].mean(axis=0))
 
-# print(s_0[['IsAAA_2018']].mean(axis=0))
-# print(s_0[['IsMidSize_2018']].mean(axis=0))
+writer = pd.ExcelWriter('/Users/charles/PycharmProjects/Scrap_Score/venv/output_file/data_20200615.xlsx',engine='xlsxwriter')
 
-# writer = pd.ExcelWriter('/Users/charles/PycharmProjects/Scrap_Score/venv/output_file/data_20200615.xlsx',engine='xlsxwriter')
-#
-# s_0.to_excel(excel_writer=writer, sheet_name=sheet_names[0], encoding="utf-8", index=False)
-# s_1.to_excel(excel_writer=writer, sheet_name=sheet_names[1], encoding="utf-8", index=False)
-# s_2.to_excel(excel_writer=writer, sheet_name=sheet_names[2], encoding="utf-8", index=False)
-# s_3.to_excel(excel_writer=writer, sheet_name=sheet_names[3], encoding="utf-8", index=False)
-# s_4.to_excel(excel_writer=writer, sheet_name=sheet_names[4], encoding="utf-8", index=False)
-#
-# writer.save()
-# writer.close()
+s_0.to_excel(excel_writer=writer, sheet_name=sheet_names[0], encoding="utf-8", index=False)
+s_1.to_excel(excel_writer=writer, sheet_name=sheet_names[1], encoding="utf-8", index=False)
+s_2.to_excel(excel_writer=writer, sheet_name=sheet_names[2], encoding="utf-8", index=False)
+s_3.to_excel(excel_writer=writer, sheet_name=sheet_names[3], encoding="utf-8", index=False)
+s_4.to_excel(excel_writer=writer, sheet_name=sheet_names[4], encoding="utf-8", index=False)
+
+writer.save()
+writer.close()
