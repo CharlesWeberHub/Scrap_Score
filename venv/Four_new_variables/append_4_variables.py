@@ -16,7 +16,7 @@ major_company_df = pd.read_csv('/Users/charles/PycharmProjects/Scrap_Score/venv/
 # print(md_pub_df.info())
 # print(major_company_df.info())
 
-mid_company_list_all = pd.concat(md_pub_df.iloc[:, i] for i in range(1, md_pub_df.shape[1]))
+mid_company_list_all = pd.concat(md_pub_df.iloc[:, i] for i in range(0, md_pub_df.shape[1]))
 mid_company_list_all.index = pd.np.arange(len(mid_company_list_all))
 mid_company_list_all = mid_company_list_all.dropna().unique().tolist()
 mid_company_list_all = [item.lower() for item in mid_company_list_all]
